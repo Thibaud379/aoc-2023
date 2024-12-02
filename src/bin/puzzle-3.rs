@@ -23,11 +23,11 @@ fn main() {
             return;
         }
     };
-    println!("Got calibration! `{sum}`")
+    println!("Got calibration! `{sum}`");
 }
 
 fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
-    let is_symbol = |c: u8| !c.is_ascii_digit() && !(c == ('.' as u8));
+    let is_symbol = |c: u8| !c.is_ascii_digit() && c != b'.';
     let mut sum: u64 = 0;
     let mut current_lines = [Some(Ok(String::new())), lines.next(), lines.next()]
         .map(Option::unwrap)
@@ -35,7 +35,7 @@ fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         .map(String::into_bytes);
     let width: usize = current_lines[1].len();
     current_lines[0] = ".".repeat(width).into_bytes();
-    let mut lines = lines.chain([Ok(".".repeat(width)), Ok(".".repeat(width))].into_iter());
+    let mut lines = lines.chain([Ok(".".repeat(width)), Ok(".".repeat(width))]);
     while let Some(Ok(new_line)) = lines.next() {
         let mut parsing = false;
         let mut valid = false;
@@ -44,7 +44,7 @@ fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         let above = &current_lines[0];
         let below = &current_lines[2];
         for (x, b) in line.iter().enumerate() {
-            let c = char::from_u32(*b as u32).expect("Only ascii caracters");
+            let c = char::from_u32(u32::from(*b)).expect("Only ascii caracters");
             match (parsing, c.is_ascii_digit()) {
                 (false, true) => {
                     parsing = true;
@@ -74,8 +74,8 @@ fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
                         valid = false;
                         sum += parsed
                             .iter()
-                            .map(|b| b - ('0' as u8))
-                            .fold(0u64, |acc, d| acc * 10 + d as u64);
+                            .map(|b| b - b'0')
+                            .fold(0u64, |acc, d| acc * 10 + u64::from(d));
                     }
                     parsed.clear();
                 }
@@ -85,8 +85,8 @@ fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         if parsing && valid {
             sum += parsed
                 .iter()
-                .map(|b| b - ('0' as u8))
-                .fold(0u64, |acc, d| acc * 10 + d as u64)
+                .map(|b| b - b'0')
+                .fold(0u64, |acc, d| acc * 10 + u64::from(d));
         }
         current_lines.rotate_left(1);
         current_lines[2] = new_line.into_bytes();
@@ -97,8 +97,8 @@ fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
 
 fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
     let is_symbol = |c: u8, g: (usize, usize), m: &mut Vec<(usize, usize)>| {
-        let symbol = !c.is_ascii_digit() && !(c == ('.' as u8));
-        if c == '*' as u8 {
+        let symbol = !c.is_ascii_digit() && c != b'.';
+        if c == b'*' {
             m.push(g);
         }
         symbol
@@ -109,7 +109,7 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         .map(String::into_bytes);
     let width: usize = current_lines[1].len();
     current_lines[0] = ".".repeat(width).into_bytes();
-    let mut lines = lines.chain([Ok(".".repeat(width)), Ok(".".repeat(width))].into_iter());
+    let mut lines = lines.chain([Ok(".".repeat(width)), Ok(".".repeat(width))]);
     let mut y: usize = 0;
     let mut gears: HashMap<(usize, usize), Vec<u64>> = HashMap::new();
 
@@ -122,7 +122,7 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         let above = &current_lines[0];
         let below = &current_lines[2];
         for (x, b) in line.iter().enumerate() {
-            let c = char::from_u32(*b as u32).expect("Only ascii caracters");
+            let c = char::from_u32(u32::from(*b)).expect("Only ascii caracters");
             match (parsing, c.is_ascii_digit()) {
                 (false, true) => {
                     parsing = true;
@@ -167,8 +167,8 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
                         valid = false;
                         let value = parsed
                             .iter()
-                            .map(|b| b - ('0' as u8))
-                            .fold(0u64, |acc, d| acc * 10 + d as u64);
+                            .map(|b| b - b'0')
+                            .fold(0u64, |acc, d| acc * 10 + u64::from(d));
                         for gear in &parsed_gears {
                             gears
                                 .entry(*gear)
@@ -185,8 +185,8 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         if parsing && valid {
             let value = parsed
                 .iter()
-                .map(|b| b - ('0' as u8))
-                .fold(0u64, |acc, d| acc * 10 + d as u64);
+                .map(|b| b - b'0')
+                .fold(0u64, |acc, d| acc * 10 + u64::from(d));
             for gear in &parsed_gears {
                 gears
                     .entry(*gear)
@@ -201,6 +201,6 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
     }
     gears
         .values()
-        .filter_map(|v| (v.len() == 2).then(|| v[0] * v[1]))
+        .filter(|&v| (v.len() == 2)).map(|v| v[0] * v[1])
         .sum()
 }

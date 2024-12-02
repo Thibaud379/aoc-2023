@@ -22,7 +22,7 @@ fn main() {
             return;
         }
     };
-    println!("Got calibration! `{sum}`")
+    println!("Got calibration! `{sum}`");
 }
 
 fn part1(lines: std::io::Lines<BufReader<File>>) -> u64 {
@@ -42,8 +42,7 @@ fn part1(lines: std::io::Lines<BufReader<File>>) -> u64 {
                     let color_id = COLORS.iter().position(|col| col.eq(&c)).unwrap();
                     if LIMITS[color_id] < n {
                         game_id = None;
-                        return;
-                    };
+                    }
                 });
             }
             game_id
