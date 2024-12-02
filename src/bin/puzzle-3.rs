@@ -23,7 +23,7 @@ fn main() {
             return;
         }
     };
-    println!("Got calibration! `{sum}`");
+    println!("Got result `{sum}`!");
 }
 
 fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
@@ -201,6 +201,7 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
     }
     gears
         .values()
-        .filter(|&v| (v.len() == 2)).map(|v| v[0] * v[1])
+        .filter(|&v| (v.len() == 2))
+        .map(|v| v[0] * v[1])
         .sum()
 }

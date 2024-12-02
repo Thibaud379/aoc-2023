@@ -23,7 +23,7 @@ fn main() {
             return;
         }
     };
-    println!("Got calibration! `{sum}`");
+    println!("Got result `{sum}`!");
 }
 
 fn part1(lines: std::io::Lines<BufReader<File>>) -> u64 {
@@ -54,7 +54,8 @@ fn part2(lines: std::io::Lines<BufReader<File>>) -> u64 {
         let line = l.unwrap();
         let colon = line.find(':').expect("Input file to be well formed");
         let card_id: usize = line[..colon]
-            .split_ascii_whitespace().nth(1)
+            .split_ascii_whitespace()
+            .nth(1)
             .expect("Input file to be well formed")
             .parse()
             .unwrap();

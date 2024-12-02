@@ -22,7 +22,7 @@ fn main() {
             return;
         }
     };
-    println!("Got calibration! `{sum}`");
+    println!("Got result `{sum}`!");
 }
 
 fn part1(lines: std::io::Lines<BufReader<File>>) -> u64 {

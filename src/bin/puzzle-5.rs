@@ -25,7 +25,7 @@ fn main() {
             return;
         }
     };
-    println!("Got calibration! `{sum}`");
+    println!("Got result `{sum}`!");
 }
 #[derive(Clone, Debug)]
 struct RangeMap {
