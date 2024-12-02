@@ -18,7 +18,7 @@ fn main() {
         "1" => part1(lines),
         "2" => part2(lines),
         _ => {
-            eprint!("Arguments invalid\nUSAGE: PART ./puzzle-1.exe FILE\n\tWhere PART must be one of `1` or `2`");
+            eprint!("Arguments invalid\nUSAGE: PART ./puzzle-2.exe FILE\n\tWhere PART must be one of `1` or `2`");
             return;
         }
     };
