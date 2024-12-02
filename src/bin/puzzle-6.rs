@@ -1,10 +1,7 @@
 use std::{
-    collections::HashMap,
-    convert::identity,
     env,
     fs::File,
     io::{BufRead, BufReader},
-    ops::Range,
 };
 
 fn main() {
@@ -41,9 +38,7 @@ fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         .next()
         .unwrap()
         .unwrap()
-        .split(':')
-        .skip(1)
-        .next()
+        .split(':').nth(1)
         .unwrap()
         .split_ascii_whitespace()
         .map(str::parse)
@@ -53,9 +48,7 @@ fn part1(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         .next()
         .unwrap()
         .unwrap()
-        .split(':')
-        .skip(1)
-        .next()
+        .split(':').nth(1)
         .unwrap()
         .split_ascii_whitespace()
         .map(str::parse)
@@ -92,9 +85,7 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         .next()
         .unwrap()
         .unwrap()
-        .split(':')
-        .skip(1)
-        .next()
+        .split(':').nth(1)
         .unwrap()
         .split_whitespace()
         .collect::<Vec<_>>()
@@ -105,9 +96,7 @@ fn part2(mut lines: std::io::Lines<BufReader<File>>) -> u64 {
         .next()
         .unwrap()
         .unwrap()
-        .split(':')
-        .skip(1)
-        .next()
+        .split(':').nth(1)
         .unwrap()
         .split_whitespace()
         .collect::<Vec<_>>()
